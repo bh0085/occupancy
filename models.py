@@ -39,6 +39,27 @@ class LineData(Base):
     date= Column(Date)
     unixtime = Column(Integer)
 
+    @hybrid_property
+    def time(self):
+        return datetime.fromtimestamp(self.unixtime)
+    
+    @hybrid_property
+    def hour(self):
+        return self.time.hour
+
+    @hybrid_property
+    def hour_str(self):
+        if self.hour>12:
+            return "{0}pm".format( self.hour -12)
+        else:
+            return "{0}am".format( self.hour)
+
+    @hybrid_property
+    def weekday(self):
+        return self.date.weekday()
+
+        
+    
     
 
        

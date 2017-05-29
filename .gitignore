@@ -4,3 +4,5 @@ venv
 bower_components
 *~
 *.pyc
+static/.webassets.cache
+static/.webassets-cache/

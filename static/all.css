@@ -1,2 +1,6 @@
 body {
   font-family: courier; }
+
+  google-chart {
+    height: 400px;
+    width: 100%; }

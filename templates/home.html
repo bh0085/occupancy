@@ -3,14 +3,15 @@
 {% extends "layout.html" %}
 {% block content %}
 
+<div id="chart_div"></div>
 
 
-<dl>
-{% for log in logs %}
-<div class="log"><dt><a href="/date/{{log.date}}">DATE! {{log.unixtime | time}} {{log.date}}</a></dt><dd>{{log.linelength}} people // {{log.linewait}} minutes</dd></div>
-{% endfor %}
-</dl>
-
+<google-chart
+   type='md-line'
+   options='{"title": "Distribution of days in 2001Q1"}'
+   data='{{chart_data}}'
+  
+</google-chart>
 
 
 {% endblock %}

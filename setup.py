@@ -17,7 +17,7 @@ setup(
     license = "MIT",
     keywords = "aeronaut",
     url = "http://github.com/bh0085/occupancy",
-    install_requires=['Flask','flask-restful','flask_assets','sqlalchemy','flask-sqlalchemy-session','pyscss','dateparser','alembic','babel'],
+    install_requires=['Flask','flask-restful','flask_assets','sqlalchemy','flask-sqlalchemy-session','pyscss','dateparser','alembic','babel','numpy'],
     packages=[''],
     long_description=read('README.md')
 )
