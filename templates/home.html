@@ -1,0 +1,16 @@
+
+
+{% extends "layout.html" %}
+{% block content %}
+
+
+
+<dl>
+{% for log in logs %}
+<div class="log"><dt><a href="/date/{{log.date}}">DATE! {{log.unixtime | time}} {{log.date}}</a></dt><dd>{{log.linelength}} people // {{log.linewait}} minutes</dd></div>
+{% endfor %}
+</dl>
+
+
+
+{% endblock %}

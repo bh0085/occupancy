@@ -1,0 +1,6 @@
+google-key.json
+*.db
+venv
+bower_components
+*~
+*.pyc

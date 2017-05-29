@@ -1,0 +1,9 @@
+Flask
+flask-restful
+flask_assets
+sqlalchemy
+flask-sqlalchemy-session
+pyscss
+dateparser
+alembic
+babel
