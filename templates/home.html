@@ -3,14 +3,22 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<div id="chart_div"></div>
-
+<google-chart
+   type='md-line'
+   options='"chart":{"title": "Friday"},
+   data='/data/wait/4'>
+</google-chart>
 
 <google-chart
    type='md-line'
-   options='{"title": "Distribution of days in 2001Q1"}'
-   data='{{chart_data}}'
-  
+   options='{"title": "Saturday"}'
+   data='/data/wait/5'>
+</google-chart>
+
+<google-chart
+   type='md-line'
+   options='{"title": "Sunday"}'
+   data='/data/wait/6'>
 </google-chart>
 
 

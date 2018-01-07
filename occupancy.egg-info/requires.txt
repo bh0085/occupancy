@@ -7,3 +7,4 @@ pyscss
 dateparser
 alembic
 babel
+numpy

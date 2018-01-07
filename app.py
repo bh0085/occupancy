@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 
 from flask import Flask
-from flask import render_template, redirect, request, url_for, session as flask_session
+from flask import render_template, redirect, request, url_for, session as flask_session, jsonify
 
 from flask_assets import Environment, Bundle
 import dateparser
 import datetime
 import babel.dates
-
+import numpy as np
 
 from db import Session
 from flask_sqlalchemy_session import flask_scoped_session
@@ -74,36 +74,40 @@ def dateview(date):
                            page={"id":"date"},
                            logs = logs)
                                           
+
+@app.route('/data/wait/<day>')
+def wait(day):
+    logs = session.query(LineData).order_by(LineData.unixtime).all()
+
+    day = int(day)
+    
+    import itertools as it
+
+    data = [["day & time", "mean wait (min)", "median wait (min)"]]
+    selected =  filter(lambda x: x.weekday == day, logs)
+
+    for k,g in it.groupby(sorted(selected, key = lambda x:x.hour),key = lambda x:x.hour):
+        items = list(g)
+
+        hour_string = "{0}pm".format(k-12) if k >12 else "{0}am".format(k)
+        day_string = ["mon","tue","wed","thu","fri","sat","sun"][day]
+        
+        data.append(["{0} {1}".format(day_string,hour_string),
+                      np.mean([e.linewait for e in items]),
+                      np.median([e.linewait for e in items])])
+    
+
+        
+    return jsonify(data)
+
+
     
 @app.route('/')
 def index():
     logs = session.query(LineData).order_by(LineData.unixtime).all()
-
-    #cols = [["hour","wait"]]
-    #vals = [["{0}:00".format(unixtime_hour(r.unixtime)),r.linewait] for r in logs]
-    #chart_data = cols + vals
-
-    import itertools as it
-
-
-    data = []
-    for k1, g1 in it.groupby(sorted(logs, key=lambda x:x.weekday),  key = lambda x: x.weekday ):
-        items1 = list(g1)
-        for k2, g2 in it.groupby(sorted(items1, key=lambda x:x.hour), key = lambda x: x.hour):
-            if k1 != 5: continue
-
-            day_string = "SAT"
-            hour_string = "{0}pm".format(k2-12) if k2 >12 else "{0}am".format(k2)
-
-            items2 = list(g2)
-            data.append(["{0} {1}".format(day_string,hour_string), sum(e.linewait for e in items2)/len(items2)])
-
-    chart_data = [["Hour interval","Average wait time"]] + data
-    
     return render_template("home.html",
                            page={"id":"home"},
-                           logs = logs,
-                           chart_data=json.dumps(chart_data))
+                           logs = logs)
 
 
 
